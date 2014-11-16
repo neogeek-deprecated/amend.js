@@ -156,6 +156,15 @@ pre .hljs {
 
 
 
+                                    <li class="scope-public">
+                                        <a href="#amend.js-amend.prototype.insert" title="Amend.insert()">Amend.insert()</a>
+                                    </li>
+
+
+
+
+
+
                         </ul>
 
                     </li>
@@ -279,7 +288,7 @@ pre .hljs {
                                     <pre><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Amend</span><span class="hljs-params">(element)</span> </span>{
 
     <span class="hljs-keyword">this</span>.element = element;
-    <span class="hljs-keyword">this</span>.events = [];
+    <span class="hljs-keyword">this</span>.events = [].concat(defaultEvents);
 
     <span class="hljs-keyword">this</span>.element.addEventListener(<span class="hljs-string">'keydown'</span>, <span class="hljs-keyword">this</span>._handleEvent.bind(<span class="hljs-keyword">this</span>));
     <span class="hljs-keyword">this</span>.element.addEventListener(<span class="hljs-string">'keyup'</span>, <span class="hljs-keyword">this</span>._handleEvent.bind(<span class="hljs-keyword">this</span>));
@@ -347,10 +356,11 @@ this.element.addEventListener(&#39;keyup&#39;, this._handleEvent.bind(this));
 
                                     <h3>Code</h3>
 
-                                    <pre><code class="hljs">Amend.prototype._handleEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+                                    <pre><code class="hljs">Amend.prototype._handleEvent = function (e) {
 
     <span class="hljs-keyword">var</span> i,
         length,
+        <span class="hljs-keyword">value</span> = <span class="hljs-keyword">this</span>.element.<span class="hljs-keyword">value</span>,
         selection = <span class="hljs-keyword">this</span>.selection();
 
     <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>, length = <span class="hljs-keyword">this</span>.events.length; i &lt; length; i += <span class="hljs-number">1</span>) {
@@ -361,7 +371,11 @@ this.element.addEventListener(&#39;keyup&#39;, this._handleEvent.bind(this));
                 <span class="hljs-keyword">this</span>.events[i].metaKey === e.metaKey &amp;&amp;
                 <span class="hljs-keyword">this</span>.events[i].shiftKey === e.shiftKey) {
 
-            <span class="hljs-keyword">this</span>.events[i].method.call(<span class="hljs-keyword">this</span>, e);
+            <span class="hljs-keyword">value</span> = <span class="hljs-keyword">this</span>.events[i].method.call(<span class="hljs-keyword">this</span>, e, <span class="hljs-keyword">value</span>, selection);
+
+            <span class="hljs-keyword">this</span>.element.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">value</span>;
+
+            <span class="hljs-keyword">this</span>.element.setSelectionRange(selection.start, selection.end);
 
         }
 
@@ -438,6 +452,109 @@ this.element.addEventListener(&#39;keyup&#39;, this._handleEvent.bind(this));
 
 
                                         <p><code>Object</code>  Object containing both start and end position of cursor selection.</p>
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+                            <div class="method scope-public">
+
+                                
+
+                                <h2 id="amend.js-amend.prototype.insert">
+                                    <a href="#amend.js-amend.prototype.insert" class="permalink">#</a> Amend.insert()
+                                </h2>
+
+                                <p>Inserts text inside the current selection.</p>
+
+                                
+
+
+                                
+                                
+                                
+                                
+                                
+
+
+                                <section class="properties">
+
+                                    <h3>Properties</h3>
+
+
+
+                                            <p>
+                                                <b>text</b>
+                                                    <code>String</code>
+                                            </p>
+                                            <p>Text to insert inside current selection.</p>
+
+
+
+
+                                            <p>
+                                                <b>selection</b>
+                                                    <code>Object</code>
+                                            </p>
+                                            <p>Current selection of the textarea.</p>
+
+
+
+
+
+
+
+                                </section>
+
+
+                                <section class="examples">
+
+                                    <h3>Examples</h3>
+
+                                    <pre><code>editor.selection(&quot;\t&quot;, { start: 0, end: 0 });
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+                                </section>
+
+                                <section class="code">
+
+                                    <h3>Code</h3>
+
+                                    <pre><code class="hljs">Amend.prototype.insert = <span class="hljs-keyword">function</span> (text, <span class="hljs-keyword">value</span>, selection) {
+
+    <span class="hljs-keyword">value</span> = <span class="hljs-keyword">value</span>.substr(<span class="hljs-number">0</span>, selection.start) + text + <span class="hljs-keyword">value</span>.substr(selection.<span class="hljs-keyword">end</span>);
+
+    return <span class="hljs-keyword">value</span>;
+
+};</code></pre>
+
+                                </section>
+
+                                <h3>Returns</h3>
+
+
+
+
+
+
+
+                                        <p><code>String</code>  Returns updated value of the textarea.</p>
 
 
 

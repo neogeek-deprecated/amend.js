@@ -9,6 +9,8 @@
 
     'use strict';
 
+    var defaultEvents = [];
+
     /**
      * Creates a new amend object.
      *
@@ -24,7 +26,7 @@
     function Amend(element) {
 
         this.element = element;
-        this.events = [];
+        this.events = [].concat(defaultEvents);
 
         this.element.addEventListener('keydown', this._handleEvent.bind(this));
         this.element.addEventListener('keyup', this._handleEvent.bind(this));
@@ -45,6 +47,7 @@
 
         var i,
             length,
+            value = this.element.value,
             selection = this.selection();
 
         for (i = 0, length = this.events.length; i < length; i += 1) {
@@ -55,7 +58,11 @@
                     this.events[i].metaKey === e.metaKey &&
                     this.events[i].shiftKey === e.shiftKey) {
 
-                this.events[i].method.call(this, e);
+                value = this.events[i].method.call(this, e, value, selection);
+
+                this.element.value = value;
+
+                this.element.setSelectionRange(selection.start, selection.end);
 
             }
 
@@ -78,6 +85,25 @@
             start: Math.min(this.element.selectionStart, this.element.selectionEnd),
             end: Math.max(this.element.selectionStart, this.element.selectionEnd)
         };
+
+    };
+
+    /**
+     * Inserts text inside the current selection.
+     *
+     *     editor.selection("\t", { start: 0, end: 0 });
+     *
+     * @property {String} text Text to insert inside current selection.
+     * @property {Object} selection Current selection of the textarea.
+     * @return {String} Returns updated value of the textarea.
+     * @public
+     */
+
+    Amend.prototype.insert = function (text, value, selection) {
+
+        value = value.substr(0, selection.start) + text + value.substr(selection.end);
+
+        return value;
 
     };
 
