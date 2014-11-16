@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1">
+<title>amend.js</title>
+<style>
+
+.back-to-top {
+    display: none;
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
+    z-index: 999;
+}
+
+.back-to-top a {
+    display: block;
+    padding: .5em .5em .5em 1.5em;
+    line-height: 1em;
+    border-radius: .25em;
+    background: #fff url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxM3B4IiBoZWlnaHQ9IjE0cHgiIHZpZXdCb3g9IjAgMCAxMyAxNCI+CiAgICA8cGF0aCBkPSJNNy4xODc2MTE1NiwxMyBMNy4xODc2MTE1Niw1LjQ5MjQ5NzAzIEwxMC40NTg3ODUzLDUuNDkyNDk3MDMgTDUuMDk5MzE3NjMsMC4xMTM1NTgxMjkgTC0wLjI2MDE1LDUuNDkyNDk3MDMgTDMuMDExMDIzNzEsNS40OTI0OTcwMyBMMy4wMTEwMjM3MSwxMyBMNy4xODc2MTE1NiwxMyBaIiBmaWxsPSIjNDI4YmNhIj48L3BhdGg+Cjwvc3ZnPgo=) no-repeat .5em center;
+}
+
+.menu {
+    margin: 1.5em 0 0 0;
+    padding: 0;
+}
+
+.menu li {
+    list-style: none;
+}
+
+.menu li a {
+    display: block;
+    padding: .25em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu li ul {
+    margin: .25em 0 .25em 1em;
+    padding: 0;
+}
+
+.menu .scope-private {
+    opacity: 0.5;
+}
+
+.method h2 {
+    line-height: 1.3em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.permalink {
+    position: absolute;
+    margin-left: -.75em;
+    font-weight: normal;
+    color: #eee;
+}
+
+.permalink:hover {
+    color: #666;
+    text-decoration: none;
+}
+
+.bs-footer {
+    margin: 50px auto;
+    color: #777;
+    text-align: center;
+}
+
+pre .hljs {
+    padding: 0;
+    background: none;
+}
+
+</style>
+<script>
+(function(e,i,t){"use strict";var o=e.location.protocol==="file:"?"http:":e.location.protocol,s=["//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css","//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css","//code.jquery.com/jquery-2.1.1.js","//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"];function c(e){var l;if(e.match(/\.js$/)){l=i.createElement("script");l.setAttribute("src",o+e)}else if(e.match(/\.css$/)){l=i.createElement("link");l.setAttribute("rel","stylesheet");l.setAttribute("href",o+e)}l.addEventListener("load",function(){if(s.length){c(s.shift())}else{if($.isReady){t()}else{$(document).ready(t)}}});i.head.appendChild(l)}c(s.shift())})(window,document,function(){"use strict";var e=window.location.hash,i=$('[id="'+e.replace(/#/,"")+'"]'),t=$(".code"),o=$(".scope-private"),s=$(".toggle-code-blocks"),c=$(".toggle-private"),l=$(".back-to-top");function n(){if(window.scrollY>100&&l.not(":visible")){l.fadeIn()}else if(window.scrollY<100&&l.is(":visible")){l.fadeOut()}}s.on("click",function(){if(s.is(":checked")){t.show()}else{t.hide()}});c.on("click",function(){if(c.is(":checked")){o.show()}else{o.hide()}});t.hide();o.hide();if(i.length&&!i.is(":visible")){c.trigger("click")}$("pre code:not(.hljs)").each(function(){hljs.highlightBlock(this)});$(window).on("scroll",n);n()});
+</script>
+</head>
+
+<body>
+
+<div class="back-to-top"><a href="#">Back to Top</a></div>
+
+<div class="wrap">
+
+    <div class="container">
+
+        <div class="page-header">
+
+            <div class="pull-right hidden-sm hidden-xs">
+
+                <div>
+                    <label>
+                        <input type="checkbox" name="toggle-code" class="toggle-code-blocks">
+                        Toggle Code Blocks
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="checkbox" name="toggle-private" class="toggle-private">
+                        Toggle Private Methods
+                    </label>
+                </div>
+
+            </div>
+
+            <h1>amend.js</h1>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3 hidden-sm hidden-xs">
+
+                <ul class="menu">
+
+
+                    <li>
+                        <b>amend.js</b>
+                        <ul>
+
+
+
+
+
+
+                                    <li class="scope-public">
+                                        <a href="#amend.js-amend" title="Amend()">Amend()</a>
+                                    </li>
+
+
+
+
+
+
+                                    <li class="scope-private">
+                                        <a href="#amend.js-amend.prototype._handleevent" title="Amend._handleEvent()">Amend._handleEvent()</a>
+                                    </li>
+
+
+
+
+
+
+                                    <li class="scope-public">
+                                        <a href="#amend.js-amend.prototype.selection" title="Amend.selection()">Amend.selection()</a>
+                                    </li>
+
+
+
+
+
+
+                        </ul>
+
+                    </li>
+
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-9">
+
+
+
+
+
+
+
+                            <div class="method scope-public">
+
+                                
+
+                                <h2 id="amend.js-amend">
+                                    <a href="#amend.js-amend" class="permalink">#</a> Amend()
+                                </h2>
+
+                                <p>Creates a new amend object.</p>
+
+                                
+                                
+                                
+
+
+                                <section class="parameters">
+
+                                    <h3>Parameters</h3>
+
+
+
+
+
+
+
+                                            <p>
+                                                <b>canvas</b>
+                                                    <code>Object</code>
+                                            </p>
+                                            <p>Reference to an HTML textarea element.</p>
+
+
+
+
+
+
+
+                                </section>
+
+
+                                
+                                
+                                
+                                
+                                
+
+
+                                <section class="properties">
+
+                                    <h3>Properties</h3>
+
+
+
+                                            <p>
+                                                <b>element</b>
+                                                    <code>Object</code>
+                                            </p>
+                                            <p>Reference to the textarea element.</p>
+
+
+
+
+                                            <p>
+                                                <b>events</b>
+                                                    <code>Object</code>
+                                            </p>
+                                            <p>List of events fired on either keydown or keyup.</p>
+
+
+
+
+
+
+
+
+
+                                </section>
+
+
+                                <section class="examples">
+
+                                    <h3>Examples</h3>
+
+                                    <pre><code>var editor = new amend(document.querySelector(&#39;textarea&#39;));
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                                </section>
+
+                                <section class="code">
+
+                                    <h3>Code</h3>
+
+                                    <pre><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Amend</span><span class="hljs-params">(element)</span> </span>{
+
+    <span class="hljs-keyword">this</span>.element = element;
+    <span class="hljs-keyword">this</span>.events = [];
+
+    <span class="hljs-keyword">this</span>.element.addEventListener(<span class="hljs-string">'keydown'</span>, <span class="hljs-keyword">this</span>._handleEvent.bind(<span class="hljs-keyword">this</span>));
+    <span class="hljs-keyword">this</span>.element.addEventListener(<span class="hljs-string">'keyup'</span>, <span class="hljs-keyword">this</span>._handleEvent.bind(<span class="hljs-keyword">this</span>));
+
+}</code></pre>
+
+                                </section>
+
+                                <h3>Returns</h3>
+
+
+
+
+
+
+
+
+
+                                        <p><code>Object</code>  New amend object.</p>
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+                            <div class="method scope-private">
+
+                                
+
+                                <h2 id="amend.js-amend.prototype._handleevent">
+                                    <a href="#amend.js-amend.prototype._handleevent" class="permalink">#</a> Amend._handleEvent()
+                                    <small>private method</small>
+                                </h2>
+
+                                <p>Handles all key down/up events.</p>
+
+                                
+
+
+                                
+
+
+                                <section class="examples">
+
+                                    <h3>Examples</h3>
+
+                                    <pre><code>this.element.addEventListener(&#39;keydown&#39;, this._handleEvent.bind(this));
+this.element.addEventListener(&#39;keyup&#39;, this._handleEvent.bind(this));
+</code></pre>
+
+
+
+
+
+
+                                </section>
+
+                                <section class="code">
+
+                                    <h3>Code</h3>
+
+                                    <pre><code class="hljs">Amend.prototype._handleEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+
+    <span class="hljs-keyword">var</span> i,
+        length,
+        selection = <span class="hljs-keyword">this</span>.selection();
+
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>, length = <span class="hljs-keyword">this</span>.events.length; i &lt; length; i += <span class="hljs-number">1</span>) {
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.events[i].type === e.type &amp;&amp;
+                <span class="hljs-keyword">this</span>.events[i].keyCode.indexOf(e.keyCode) !== -<span class="hljs-number">1</span> &amp;&amp;
+                <span class="hljs-keyword">this</span>.events[i].selection !== (selection.start === selection.end) &amp;&amp;
+                <span class="hljs-keyword">this</span>.events[i].metaKey === e.metaKey &amp;&amp;
+                <span class="hljs-keyword">this</span>.events[i].shiftKey === e.shiftKey) {
+
+            <span class="hljs-keyword">this</span>.events[i].method.call(<span class="hljs-keyword">this</span>, e);
+
+        }
+
+    }
+
+};</code></pre>
+
+                                </section>
+
+                                <h3>Returns</h3>
+
+
+
+                                        <p><code>void</code>  </p>
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+                            <div class="method scope-public">
+
+                                
+
+                                <h2 id="amend.js-amend.prototype.selection">
+                                    <a href="#amend.js-amend.prototype.selection" class="permalink">#</a> Amend.selection()
+                                </h2>
+
+                                <p>Returns the current cursor selection.</p>
+
+                                
+
+
+                                
+
+
+                                <section class="examples">
+
+                                    <h3>Examples</h3>
+
+                                    <pre><code>editor.selection();
+</code></pre>
+
+
+
+
+
+
+                                </section>
+
+                                <section class="code">
+
+                                    <h3>Code</h3>
+
+                                    <pre><code class="hljs">Amend.prototype.selection = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-keyword">return</span> {
+        start: <span class="hljs-built_in">Math</span>.min(<span class="hljs-keyword">this</span>.element.selectionStart, <span class="hljs-keyword">this</span>.element.selectionEnd),
+        end: <span class="hljs-built_in">Math</span>.max(<span class="hljs-keyword">this</span>.element.selectionStart, <span class="hljs-keyword">this</span>.element.selectionEnd)
+    };
+
+};</code></pre>
+
+                                </section>
+
+                                <h3>Returns</h3>
+
+
+
+                                        <p><code>Object</code>  Object containing both start and end position of cursor selection.</p>
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer class="bs-footer">
+
+    <div class="container">
+
+        <p>Documentation generated with <a href="https://github.com/neogeek/doxdox">doxdox</a>.</p>
+
+    </div>
+
+</footer>
+
+</body>
+</html>
