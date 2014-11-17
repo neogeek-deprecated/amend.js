@@ -11,6 +11,81 @@
 
     var defaultEvents = [];
 
+    defaultEvents.push({
+        // Tab, with selection
+        type: 'keydown',
+        keyCode: [9],
+        selection: true,
+        metaKey: false,
+        shiftKey: false,
+        method: function (e, value, selection) {
+
+            var selectedValue = value.substr(selection.start, selection.end);
+
+            selectedValue = selectedValue.replace(/(^|\n)/g, '$1\t');
+
+            e.preventDefault();
+
+            value = this.insert(selectedValue, value, {
+                start: selection.start,
+                end: selection.end
+            });
+
+            selection.end = selection.start + (selectedValue.length);
+
+            return value;
+
+        }
+    });
+
+    defaultEvents.push({
+        // Tab + shift, with selection
+        type: 'keydown',
+        keyCode: [9],
+        selection: true,
+        metaKey: false,
+        shiftKey: true,
+        method: function (e, value, selection) {
+
+            var selectedValue = value.substr(selection.start, selection.end);
+
+            selectedValue = selectedValue.replace(/(^|\n)\t/g, '$1');
+
+            e.preventDefault();
+
+            value = this.insert(selectedValue, value, {
+                start: selection.start,
+                end: selection.end
+            });
+
+            selection.end = selection.start + (selectedValue.length);
+
+            return value;
+
+        }
+    });
+
+    defaultEvents.push({
+        // Tab, with no selection
+        type: 'keydown',
+        keyCode: [9],
+        selection: false,
+        metaKey: false,
+        shiftKey: false,
+        method: function (e, value, selection) {
+
+            e.preventDefault();
+
+            value = this.insert("\t", value, selection);
+
+            selection.start = selection.start + 1;
+            selection.end = selection.end + 1;
+
+            return value;
+
+        }
+    });
+
     /**
      * Creates a new amend object.
      *
