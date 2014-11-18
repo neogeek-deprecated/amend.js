@@ -85,6 +85,32 @@
         }
     });
 
+    defaultEvents.push({
+        // Tab + shift, with no selection
+        type: 'keydown',
+        keyCode: [9],
+        selection: false,
+        metaKey: false,
+        shiftKey: true,
+        expand: true,
+        method: function (e, value, selection) {
+
+            var selectedValue = selection.value.replace(/^\t/mg, '');
+
+            e.preventDefault();
+
+            value = this.insert(selectedValue, value, {
+                start: selection.start,
+                end: selection.end
+            });
+
+            selection.end = selection.end - (selection.value.length - selectedValue.length);
+
+            return value;
+
+        }
+    });
+
     /**
      * Creates a new amend object.
      *
