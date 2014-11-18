@@ -18,11 +18,10 @@
         selection: true,
         metaKey: false,
         shiftKey: false,
+        expand: true,
         method: function (e, value, selection) {
 
-            var selectedValue = value.substr(selection.start, selection.end);
-
-            selectedValue = selectedValue.replace(/(^|\n)/g, '$1\t');
+            var selectedValue = selection.value.replace(/^/mg, '\t');
 
             e.preventDefault();
 
@@ -31,7 +30,7 @@
                 end: selection.end
             });
 
-            selection.end = selection.start + (selectedValue.length);
+            selection.end = selection.end + (selectedValue.length - selection.value.length);
 
             return value;
 
@@ -45,11 +44,10 @@
         selection: true,
         metaKey: false,
         shiftKey: true,
+        expand: true,
         method: function (e, value, selection) {
 
-            var selectedValue = value.substr(selection.start, selection.end);
-
-            selectedValue = selectedValue.replace(/(^|\n)\t/g, '$1');
+            var selectedValue = selection.value.replace(/^\t/mg, '');
 
             e.preventDefault();
 
@@ -58,7 +56,7 @@
                 end: selection.end
             });
 
-            selection.end = selection.start + (selectedValue.length);
+            selection.end = selection.end - (selection.value.length - selectedValue.length);
 
             return value;
 
@@ -72,11 +70,12 @@
         selection: false,
         metaKey: false,
         shiftKey: false,
+        expand: false,
         method: function (e, value, selection) {
 
             e.preventDefault();
 
-            value = this.insert("\t", value, selection);
+            value = this.insert('\t', value, selection);
 
             selection.start = selection.start + 1;
             selection.end = selection.end + 1;
@@ -133,6 +132,8 @@
                     this.events[i].metaKey === e.metaKey &&
                     this.events[i].shiftKey === e.shiftKey) {
 
+                selection = this.selection(this.events[i].expand);
+
                 value = this.events[i].method.call(this, e, value, selection);
 
                 this.element.value = value;
@@ -149,17 +150,45 @@
      * Returns the current cursor selection.
      *
      *     editor.selection();
+     *     editor.selection(true);
      *
-     * @return {Object} Object containing both start and end position of cursor selection.
+     * @param {Object} extend Automatically extend to select the entirety of the line(s) selected.
+     * @return {Object} Object containing both the value and start/end position of cursor selection.
      * @public
      */
 
-    Amend.prototype.selection = function () {
+    Amend.prototype.selection = function (extend) {
 
-        return {
-            start: Math.min(this.element.selectionStart, this.element.selectionEnd),
-            end: Math.max(this.element.selectionStart, this.element.selectionEnd)
-        };
+        var selection = {
+                start: Math.min(this.element.selectionStart, this.element.selectionEnd),
+                end: Math.max(this.element.selectionStart, this.element.selectionEnd),
+                value: null
+            },
+            matches;
+
+        if (extend) {
+
+            matches = this.element.value.substr(0, selection.start).match(/^([\s\S]+)\n/);
+
+            if (matches) {
+
+                selection.start = matches[0].length;
+
+            }
+
+            matches = this.element.value.substr(selection.end).match(/([\S]*)\n/);
+
+            if (matches) {
+
+                selection.end = selection.end + (matches[0].length - 1);
+
+            }
+
+        }
+
+        selection.value = this.element.value.substr(selection.start, selection.end - selection.start);
+
+        return selection;
 
     };
 
