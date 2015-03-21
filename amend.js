@@ -118,12 +118,18 @@
      *
      * @property {Object} element Reference to the textarea element.
      * @property {Object} events List of events fired on either keydown or keyup.
-     * @param {Object} canvas Reference to an HTML textarea element.
+     * @param {Object} element Reference to an HTML textarea element.
      * @return {Object} New amend object.
      * @public
      */
 
     function Amend(element) {
+
+        if (!(this instanceof Amend)) {
+
+            return new Amend(element);
+
+        }
 
         this.element = element;
         this.events = [].concat(defaultEvents);
